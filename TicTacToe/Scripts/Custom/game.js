@@ -25,16 +25,19 @@ tictactoc.controller('GameController', function ($scope, $timeout) {
             }
         }
 
-        $scope.config.grid[bestMove.x][bestMove.y] = $scope.stateGame.CurrentPlayer.Value;
-
-        var winner = checkWinStatique3();
-
         $timeout(function () {
+
+            $scope.config.grid[bestMove.x][bestMove.y] = $scope.stateGame.CurrentPlayer.Value;
+
+            var winner = checkWinStatique3();
+
             if (!winner)
                 nextTurn();
-            else
-                $scope.endGame(winner);
-        }, 100);
+            else {
+                var p_winner = getPlayerByValue(winner);
+                $scope.endGame(p_winner);
+            }
+        }, 1000);
     };
 
     var _score = { "human": -10, "ia": 10, "tie": 0 };
@@ -97,12 +100,15 @@ tictactoc.controller('GameController', function ($scope, $timeout) {
 
 
     $scope.setNumberPlayer = function (numberPlayer) {
+        $scope.config.IsVersusIA = numberPlayer === 1 ? true : false;
         initPlayers(numberPlayer);
     };
 
     $scope.startGame = function () {
         var defaultSize = 3;
         var defaultNumerPlayers = 2;
+
+        $scope.data.winner = null;
 
         initGrid(defaultSize, defaultSize);
 
@@ -130,7 +136,6 @@ tictactoc.controller('GameController', function ($scope, $timeout) {
             $scope.stateGame.IsHumanTurn = true;
         else
             IATurn();
-        //console.log("Missing fct for IA");
     };
 
     $scope.clickCell = function (x, y) {
@@ -143,8 +148,10 @@ tictactoc.controller('GameController', function ($scope, $timeout) {
             $timeout(function () {
                 if (!winner)
                     nextTurn();
-                else
-                    $scope.endGame(winner);
+                else {
+                    var p_winner = getPlayerByValue(winner);
+                    $scope.endGame(p_winner);
+                }
             }, 100);
         }
     };

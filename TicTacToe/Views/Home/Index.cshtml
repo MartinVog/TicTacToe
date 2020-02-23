@@ -1,21 +1,24 @@
 ﻿<div id="TicTacToe">
-    <ul>
-        <li ng-click="setNumberPlayer(1);" ng-class="{active:config.NumberPlayers === 1}">1 Player</li>
-        <li ng-click="setNumberPlayer(2);" ng-class="{active:config.NumberPlayers === 2}">2 Players</li>
+    <ul id="select-number-player">
+        <li ng-class="{active:config.IsVersusIA}"><a ng-click="setNumberPlayer(1);">1 Player</a></li>
+        <li ng-class="{active:!config.IsVersusIA && config.NumberPlayers === 2}"><a ng-click="setNumberPlayer(2);">2 Players</a></li>
     </ul>
 
 
-    <a ng-if="config.NumberPlayers && config.NumberPlayers>0" class="btn" ng-click="startGame();">Start game</a>
-    <a ng-if="stateGame" class="btn" ng-click="endGame();">End game</a>
+    <a ng-if="config.NumberPlayers && config.NumberPlayers>0 && !stateGame" class="btn green" ng-click="startGame();">Start game</a>
+    <a ng-if="stateGame" class="btn red" ng-click="endGame();">End game</a>
 
+    <p ng-if="stateGame" id="state-turn">{{stateGame.CurrentPlayer.Name}} turn ...</p>
 
     <div id="board">
         <div class="col" ng-repeat="x in config.grid track by $index">
-            <div class="cell" ng-repeat="y in x track by $index" ng-click="clickCell($parent.$index,$index);">{{$parent.$index}}-{{$index}} -- {{config.grid[$parent.$index][$index]}}</div>
+            <div class="cell" ng-repeat="y in x track by $index" ng-click="clickCell($parent.$index,$index);">{{config.grid[$parent.$index][$index]}}</div>
         </div>
+
+        <p ng-if="data.winner" id="winner">{{data.winner.Name}} win !!</p>
     </div>
 
-    <div class="help">
+    @*<div class="help">
         <h3>Data</h3>
         <pre>{{data}}</pre>
         <h3>Config</h3>
@@ -23,6 +26,6 @@
         <h3>Grid</h3>
         <pre>{{config.grid}}</pre>
 
-    </div>
+    </div>*@
 
 </div>
