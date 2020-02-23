@@ -8,7 +8,6 @@ tictactoc.controller('GameController', function ($scope, $timeout) {
         for (var x = 0; x < $scope.config.SizeX; x++) {
             for (var y = 0; y < $scope.config.SizeY; y++) {
                 if (!$scope.config.grid[x][y]) {
-
                     $scope.config.grid[x][y] = $scope.stateGame.CurrentPlayer.Value;
 
                     var score = minMax($scope.config.grid, false, 0);
@@ -19,15 +18,13 @@ tictactoc.controller('GameController', function ($scope, $timeout) {
                     }
 
                     $scope.config.grid[x][y] = null;
-
                 }
-
             }
         }
 
         $timeout(function () {
-
-            $scope.config.grid[bestMove.x][bestMove.y] = $scope.stateGame.CurrentPlayer.Value;
+            if (bestMove)
+                $scope.config.grid[bestMove.x][bestMove.y] = $scope.stateGame.CurrentPlayer.Value;
 
             var winner = checkWinStatique3();
 
@@ -41,7 +38,6 @@ tictactoc.controller('GameController', function ($scope, $timeout) {
     };
 
     var _score = { "human": -10, "ia": 10, "tie": 0 };
-
 
     var minMax = function (board, isMaximazing, deep) {
         //Protection
