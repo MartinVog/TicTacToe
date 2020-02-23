@@ -1,0 +1,12 @@
+﻿#TicTacToe #board {
+  display: flex;
+}
+#TicTacToe #board .col {
+  display: flex;
+  flex-flow: column nowrap;
+}
+#TicTacToe #board .col .cell {
+  height: 200px;
+  width: 200px;
+  border: 1px solid black;
+}

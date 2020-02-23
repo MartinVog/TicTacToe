@@ -1,0 +1,28 @@
+﻿<div id="TicTacToe">
+    <ul>
+        <li ng-click="setNumberPlayer(1);" ng-class="{active:config.NumberPlayers === 1}">1 Player</li>
+        <li ng-click="setNumberPlayer(2);" ng-class="{active:config.NumberPlayers === 2}">2 Players</li>
+    </ul>
+
+
+    <a ng-if="config.NumberPlayers && config.NumberPlayers>0" class="btn" ng-click="startGame();">Start game</a>
+    <a ng-if="stateGame" class="btn" ng-click="endGame();">End game</a>
+
+
+    <div id="board">
+        <div class="col" ng-repeat="x in config.grid track by $index">
+            <div class="cell" ng-repeat="y in x track by $index" ng-click="clickCell($parent.$index,$index);">{{$parent.$index}}-{{$index}} -- {{config.grid[$parent.$index][$index]}}</div>
+        </div>
+    </div>
+
+    <div class="help">
+        <h3>Data</h3>
+        <pre>{{data}}</pre>
+        <h3>Config</h3>
+        <pre>{{config}}</pre>
+        <h3>Grid</h3>
+        <pre>{{config.grid}}</pre>
+
+    </div>
+
+</div>
